@@ -35,7 +35,7 @@
 							<muleVersion>4.4.0</muleVersion>
 							<username>${username}</username>
 							<password>${password}</password>
-							<applicationName>MongoDB-proc</applicationName>
+							<applicationName>MongoDB-exp</applicationName>
 							<environment>Sandbox</environment>
 							<workerType>Micro</workerType>
 							<workers>1</workers>
