@@ -1,0 +1,53 @@
+#%RAML 1.0
+title: Videos_games-exp
+version: v1
+description: Experience APIs are catered towards delivering a delightful end-consumer experience. They get their power by maniacally focusing on the consumer and reusing the building blocks already created (typically in the form of System or Process APIs).
+
+types:
+  games: !include Datatypes/dataType.raml
+
+/games:
+  description: List All games on RAWG.io on MongoDB
+  displayName: List Games
+  get:
+    queryParameters:
+      genre:
+        type: string
+        required: false
+      platform:
+        type: string
+        required: false
+      date:
+        type: date-only
+        required: false
+      stores:
+        type: string
+        required: false
+      best_rating:
+        type: number
+        required: false
+      worst_rating:
+        type: number
+        required: false
+    description: List all games
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              !include Examples/example.raml
+      401:
+        description: Unauthorized or invalid client application
+         credential
+  post:
+    description: Add games to the mongoDB
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              !include Examples/example.raml
+      401:
+        description: Unauthorized or invalid client application
+         credential
+

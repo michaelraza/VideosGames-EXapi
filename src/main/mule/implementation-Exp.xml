@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="GET-implementation-ExpFlow" doc:id="06ebbe75-7e6f-4f18-bb5f-f07ebec0a123" >
+		<logger level="INFO" doc:name="Begin Request" doc:id="6b763a5e-d8ad-4068-a451-28014f7dc5a6" />
+		<http:request method="GET" doc:name="Request to Get games at Proc" doc:id="fc7fada2-834e-461e-be10-920962c87de4" path="/api/proc" config-ref="HTTP_Request_configuration" responseTimeout="1000000">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"filter" : attributes.queryParams.filter
+}]]]></http:headers>
+			<http:query-params ><![CDATA[#[output application/java 
+---
+{
+	("date" : attributes.queryParams.date) if (attributes.queryParams.date != null),
+	("time" : attributes.queryParams.time) if (attributes.queryParams.time != null),
+	("stores" : attributes.queryParams.stores) if (attributes.queryParams.stores != null),
+	("genre" : attributes.queryParams.genre) if (attributes.queryParams.genre != null),
+	("platform" : attributes.queryParams.platform) if (attributes.queryParams.platform != null),
+	("best_rating" : attributes.queryParams.best_rating) if (attributes.queryParams.best_rating != null),
+	("worst_rating" : attributes.queryParams.worst_rating) if (attributes.queryParams.worst_rating != null)
+	
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+	<flow name="POST-implementation-ExpFlow1" doc:id="0b495b4e-9fd5-482d-8b10-caf51a09d872" >
+		<logger level="INFO" doc:name="Begin Request" doc:id="d1881850-fcaa-4266-a243-f3eb59b7e254" />
+		<http:request method="POST" doc:name="Request to Add games to Proc" doc:id="3ad65f24-e86f-4ab6-bfda-6c855f5e117d" config-ref="HTTP_Request_configuration1" path="/api/proc">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"page" : attributes.queryParams.page default 1,
+	("last" : attributes.queryParams.last) if (attributes.queryParams.last != null),
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>
